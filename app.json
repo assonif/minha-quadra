@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "minha-quadra",
+    "slug": "minha-quadra",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
