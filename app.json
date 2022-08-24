@@ -2,9 +2,24 @@
   "expo": {
     "name": "minha-quadra",
     "slug": "minha-quadra",
+    "scheme": "minha-quadra",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "plugins": [
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "1196097591238917",
+          "clientToken": "3ae97ea5ecb5514930776262371c568f",
+          "displayName": "minha-quadra"
+        }
+      ]
+    ],
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "cover"
+    }
   }
 }
