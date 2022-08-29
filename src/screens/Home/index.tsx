@@ -2,17 +2,16 @@ import React from 'react';
 import ListItem from '../../components/ListItem';
 import * as S from './styles';
 
-const Home = () => {
+interface IHomeProps {
+    navigation: any;
+}
+
+const Home = ({ navigation }: IHomeProps) => {
     return (
         <S.Container>
             <S.List>
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
-                <ListItem />
+                <ListItem navigation={navigation} />
+                <ListItem navigation={navigation} /><ListItem navigation={navigation} /><ListItem navigation={navigation} /><ListItem navigation={navigation} /><ListItem navigation={navigation} />
             </S.List>
         </S.Container>
     );
