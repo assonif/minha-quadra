@@ -23,10 +23,6 @@ const ReservationItem: React.FC = () => {
                 </View>
 
             </S.RightContainer>
-
-
-            {/* <Status status='approved' />
-            <Status status='declined' /> */}
         </S.Container>
     );
 }

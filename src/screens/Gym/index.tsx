@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Agenda, AgendaEntry, AgendaSchedule, DateData } from 'react-native-calendars';
-import GymInfo from '../../components/GymInfo';
 import * as S from './styles';
+
+import BottomSheet from '@gorhom/bottom-sheet';
+import CustomBottomSheet from '../../components/CustomBottomSheet';
+import GymInfo from '../../components/GymInfo';
+
 
 const timeToString = (time: number) => {
     const date = new Date(time);
     return date.toISOString().split('T')[0];
 };
 
-const Gym: React.FC = () => {
+interface IGymProps {
+    navigation: any;
+}
+
+const Gym = ({ navigation }: IGymProps) => {
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
     const [items, setItems] = useState<AgendaSchedule>({})
+
+    const handleSheetChanges = useCallback((index: number) => {
+        console.log('handleSheetChanges', index);
+    }, []);
 
     const loadItems = (day: DateData) => {
         const auxitems = items || {};
@@ -29,12 +41,12 @@ const Gym: React.FC = () => {
                     for (let j = 0; j < numItems; j++) {
                         auxitems[strTime].push({
                             name: '14:00 - 18:00h | Quadra disponivel',
-                            height: 350,
+                            height: 250,
                             day: strTime
                         });
                         auxitems[strTime].push({
                             name: '20:00 - 22:00h | Quadra disponivel',
-                            height: 150,
+                            height: 120,
                             day: strTime
                         });
                     }
@@ -50,15 +62,12 @@ const Gym: React.FC = () => {
     }
 
     const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
-        const fontSize = isFirst ? 16 : 14;
-        const color = isFirst ? 'black' : '#43515c';
-
         return (
             <TouchableOpacity
-                onPress={() => Alert.alert(reservation.name)}
+                onPress={handleOpenBottomSheet}
                 style={[styles.item, { height: reservation.height }]}
             >
-                <Text style={{ fontSize, color }}>{reservation.name}</Text>
+                <Text style={{ fontSize: 16, color: 'black' }}>{reservation.name}</Text>
             </TouchableOpacity>
         );
     }
@@ -70,6 +79,24 @@ const Gym: React.FC = () => {
             </View>
         );
     }
+
+    const sheetRef = useRef<BottomSheet>(null);
+
+    // variables
+    const snapPoints = useMemo(() => ["100%"], []);
+
+    // callbacks
+    const handleSheetChange = useCallback((index: number) => {
+        console.log("handleSheetChange", index);
+    }, []);
+
+    const handleOpenBottomSheet = useCallback(() => {
+        sheetRef.current?.snapToIndex(0);
+    }, []);
+
+    const handleClosePress = useCallback(() => {
+        sheetRef.current?.close();
+    }, []);
 
     return (
         <S.Container>
@@ -85,6 +112,7 @@ const Gym: React.FC = () => {
                     </S.TabText>
                 </S.TabPressable>
             </S.Tab>
+
             {selectedTabIndex === 0 && <GymInfo />}
 
             {selectedTabIndex === 1 && (<Agenda
@@ -97,6 +125,14 @@ const Gym: React.FC = () => {
                 hideKnob={false}
             />)}
 
+            <BottomSheet
+                ref={sheetRef}
+                snapPoints={snapPoints}
+                onChange={handleSheetChange}
+                enablePanDownToClose
+            >
+                <CustomBottomSheet onClose={handleClosePress} />
+            </BottomSheet>
         </S.Container>
     );
 }
@@ -116,5 +152,9 @@ const styles = StyleSheet.create({
         height: 15,
         flex: 1,
         paddingTop: 30
-    }
+    },
+    container: {
+        flex: 1,
+        paddingTop: 200,
+    },
 });
