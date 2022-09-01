@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Agenda, AgendaEntry, AgendaSchedule, DateData } from 'react-native-calendars';
 import * as S from './styles';
@@ -82,8 +82,12 @@ const Gym = ({ navigation }: IGymProps) => {
 
     const sheetRef = useRef<BottomSheet>(null);
 
+    useEffect(() => {
+        sheetRef.current?.close();
+    }, [sheetRef])
+
     // variables
-    const snapPoints = useMemo(() => ["100%"], []);
+    const snapPoints = useMemo(() => ["70%"], []);
 
     // callbacks
     const handleSheetChange = useCallback((index: number) => {
@@ -127,9 +131,11 @@ const Gym = ({ navigation }: IGymProps) => {
 
             <BottomSheet
                 ref={sheetRef}
+                index={-1}
                 snapPoints={snapPoints}
                 onChange={handleSheetChange}
                 enablePanDownToClose
+
             >
                 <CustomBottomSheet onClose={handleClosePress} />
             </BottomSheet>
