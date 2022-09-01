@@ -32,7 +32,7 @@ const CustomBottomSheet = ({ onClose }: ICustomBottomSheetProps) => {
                 <Pressable onPress={onClose}>
                     <AntDesign name="close" size={24} color="black" />
                 </Pressable>
-                <S.SaveButtonContainer>
+                <S.SaveButtonContainer onPress={onClose}>
                     <S.SaveButtonText>Reservar</S.SaveButtonText>
                 </S.SaveButtonContainer>
             </S.Header>
