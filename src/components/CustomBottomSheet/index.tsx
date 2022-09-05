@@ -10,11 +10,13 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 interface ICustomBottomSheetProps {
     onClose: () => void;
+    navigation: any;
 }
+
 
 type Time = 'start' | 'end' | null;
 
-const CustomBottomSheet = ({ onClose }: ICustomBottomSheetProps) => {
+const CustomBottomSheet = ({ onClose, navigation }: ICustomBottomSheetProps) => {
     const [selectedValue, setSelectedValue] = useState<Time>('start');
 
 
@@ -32,7 +34,7 @@ const CustomBottomSheet = ({ onClose }: ICustomBottomSheetProps) => {
                 <Pressable onPress={onClose}>
                     <AntDesign name="close" size={24} color="black" />
                 </Pressable>
-                <S.SaveButtonContainer onPress={onClose}>
+                <S.SaveButtonContainer onPress={() => { navigation.navigate('Confirmation') }}>
                     <S.SaveButtonText>Reservar</S.SaveButtonText>
                 </S.SaveButtonContainer>
             </S.Header>

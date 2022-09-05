@@ -137,7 +137,7 @@ const Gym = ({ navigation }: IGymProps) => {
                 enablePanDownToClose
 
             >
-                <CustomBottomSheet onClose={handleClosePress} />
+                <CustomBottomSheet onClose={handleClosePress} navigation={navigation} />
             </BottomSheet>
         </S.Container>
     );

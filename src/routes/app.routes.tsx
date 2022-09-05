@@ -5,6 +5,7 @@ import Gym from '../screens/Gym';
 import Home from '../screens/Home';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import Confirmation from '../screens/Confirmation';
 import Reservation from '../screens/Reservation';
 
 const AppStack = createStackNavigator();
@@ -54,6 +55,13 @@ function AppRoutes() {
           },
         }}
         component={Gym}
+      />
+      <AppStack.Screen
+        name="Confirmation"
+        options={{
+          headerShown: false
+        }}
+        component={Confirmation}
       />
     </AppStack.Navigator>
   );
